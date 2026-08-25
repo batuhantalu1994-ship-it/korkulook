@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 900" role="img" aria-label="KORKU LOOK">
+  <rect width="2400" height="900" fill="#FF0074"/>
+  <text font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="600" letter-spacing="18" text-anchor="end">
+    <tspan x="2280" y="420" font-size="176" fill="#000">KORKU</tspan>
+    <tspan x="2280" y="600" font-size="176" fill="#fff">LOOK</tspan>
+  </text>
+</svg>

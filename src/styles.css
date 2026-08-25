@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #000000;
+  --color-surface: #0a0a0a;
+  --color-elevated: #141414;
+  --color-fg: #ffffff;
+  --color-muted: #a3a3a3;
+  --color-subtle: #737373;
+  --color-accent: #ff0074;
+  --color-accent-fg: #000000;
+  --color-live: #ff0074;
+  --color-live-fg: #000000;
+  --color-danger: #ffffff;
+  --color-border: color-mix(in oklab, #ffffff 16%, transparent);
+  --color-border-strong: color-mix(in oklab, #ffffff 32%, transparent);
+  --color-ring: #ff0074;
+  --color-door-purple: #9b4dff;
+  --color-door-green: #b8ff54;
+  --color-door-lilac: #d4b0ff;
+  --color-crow: #0a0a0a;
+  --color-crow-tail: #4a4a4a;
+  --color-wa: #0b141a;
+  --color-wa-head: #1f2c34;
+  --color-wa-mine: #005c4b;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-mark: "Barlow Condensed", "Arial Narrow", sans-serif;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.35rem, 1.1rem + 0.8vw, 1.65rem);
+  --text-2xl: clamp(1.85rem, 1.3rem + 1.8vw, 2.75rem);
+  --text-3xl: clamp(2.4rem, 1.5rem + 3.2vw, 4.25rem);
+  --text-4xl: clamp(3rem, 1.6rem + 4.5vw, 5.5rem);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    font-weight: 700;
+    text-transform: none;
+  }
+
+  p {
+    text-wrap: pretty;
+    line-height: 1.55;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+}
+
+@keyframes cta-flash {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, #ffffff 0%, transparent);
+  }
+  45% {
+    box-shadow:
+      0 0 0 3px color-mix(in oklab, #ffffff 55%, transparent),
+      0 0 22px 2px color-mix(in oklab, #ffffff 40%, transparent);
+  }
+}
+
+.flash-cta {
+  animation: cta-flash 2.2s ease-in-out infinite;
+}
+
+@keyframes splash-wind {
+  0% { transform: translateX(-30%); opacity: 0; }
+  25% { opacity: 0.55; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+
+@keyframes splash-crow {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  35% { transform: translate(28px, -22px) rotate(-14deg) scale(1.08); }
+  100% { transform: translate(160px, -130px) rotate(-32deg) scale(0.55); opacity: 0; }
+}
+
+@keyframes splash-flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.72); }
+}
+
+@keyframes splash-mark {
+  0%, 35% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.splash-wind {
+  animation: splash-wind 1.6s ease-out infinite;
+}
+
+.splash-crow {
+  animation: splash-crow 1.8s ease-in 0.35s forwards;
+  transform-origin: 20% 80%;
+}
+
+.splash-flap {
+  animation: splash-flap 0.18s ease-in-out 0.35s 8;
+  transform-origin: center;
+}
+
+.splash-mark {
+  animation: splash-mark 0.7s ease-out 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

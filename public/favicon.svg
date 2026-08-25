@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="KORKU LOOK">
+  <rect width="32" height="32" rx="8" fill="#FF0074"/>
+  <g fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10.2 15.2 L16.2 10.2 L22.2 15.2 Z"/>
+    <path d="M7.6 15.2 H24.8"/>
+    <circle cx="16.2" cy="19" r="2.7"/>
+    <path d="M15.1 18.3 L17.3 19.7"/>
+    <path d="M17.3 18.3 L15.1 19.7"/>
+    <path d="M16.2 21.7 V24"/>
+    <path d="M7.4 22.8 L16.2 23.5 L24.8 22.8"/>
+    <path d="M16.2 24 L11.2 30"/>
+    <path d="M16.2 24 L21.2 30"/>
+  </g>
+  <path fill="#4A4A4A" d="M15.4 7.2 C18.8 4.6 25.2 6.4 25.4 11.2 C22.2 12.4 18.2 11.2 15.8 8.6 Z"/>
+  <path fill="#4A4A4A" d="M17.2 8 C20.4 6.8 23.6 8.4 23.8 10.6 C21.4 10.8 18.6 9.6 17.2 8 Z"/>
+  <path fill="#0A0A0A" d="M8.4 7.2 L12.6 6.1 L12.8 8.6 Z"/>
+  <circle fill="#0A0A0A" cx="13.6" cy="7.1" r="2.55"/>
+  <circle fill="#fff" cx="12.85" cy="6.55" r="0.7"/>
+  <circle fill="#fff" cx="14.55" cy="6.45" r="0.55"/>
+  <path fill="none" stroke="#0A0A0A" stroke-width="1.2" stroke-linecap="round" d="M14.8 9.2 L16.1 10.2"/>
+</svg>
