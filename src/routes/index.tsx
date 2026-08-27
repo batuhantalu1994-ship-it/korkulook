@@ -9,7 +9,7 @@ import {
   Warehouse,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { KioskPanel } from "@/components/demo/kiosk-panel";
+import { ResidentPanel } from "@/components/demo/resident-panel";
 import { useT } from "@/lib/use-t";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -39,6 +39,13 @@ function Home() {
 
   return (
     <main>
+      <section className="overflow-hidden border-b border-border bg-elevated">
+        <img
+          src="/oem/banner.jpg"
+          alt="Evinizi geleceğe taşıyın"
+          className="max-h-[460px] w-full object-cover object-center lg:max-h-[520px]"
+        />
+      </section>
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
@@ -59,7 +66,10 @@ function Home() {
           <p className="mt-6 text-sm text-subtle">{t.hero.proof}</p>
         </div>
         <div className="mx-auto w-full max-w-sm">
-          <KioskPanel compact />
+          <p className="mb-2 text-xs uppercase tracking-[0.16em] text-muted">
+            {t.demo.phone}
+          </p>
+          <ResidentPanel compact />
         </div>
       </section>
 

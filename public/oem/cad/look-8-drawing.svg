@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 780">
+  <rect width="980" height="780" fill="#f4f4f4"/>
+  <text x="80" y="36" font-family="Barlow Condensed, Arial Narrow, sans-serif"
+        font-size="28" font-weight="700" fill="#FF0074">KORKU LOOK · LOOK-8 · RFQ</text>
+  <text x="80" y="56" font-family="Arial, sans-serif" font-size="12" fill="#444">
+    Cast / CNC aluminum · IP65 target · front glass · PoE rear · units millimetres ±0.3
+  </text>
+  <g transform="translate(0,0)">
+    <rect x="80.0" y="60.0" width="284.0" height="584.0" rx="56.0" ry="56.0" fill="#111" stroke="#FF0074" stroke-width="2"/>
+    <rect x="92.0" y="80.0" width="260.0" height="532.0" rx="44.0" ry="44.0" fill="#1c1c1c"/>
+    <rect x="132.0" y="84.0"
+          width="180.0" height="8.0" fill="#FFB3D4" rx="3"/>
+    <circle cx="222.0" cy="104.0" r="9.0" fill="#333" stroke="#888"/>
+    <text x="222.0" y="626.0" text-anchor="middle"
+          font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="16" fill="#fff">KORKU LOOK</text>
+  </g>
+  
+    <g font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="13" fill="#111">
+      <line x1="80" y1="672.0" x2="364.0" y2="672.0" stroke="#111" />
+      <text x="222.0" y="690.0" text-anchor="middle">142 mm</text>
+      <line x1="52" y1="60" x2="52" y2="644.0" stroke="#111" />
+      <text x="40" y="352.0" text-anchor="middle" transform="rotate(-90 40 352.0)">292 mm</text>
+    </g>
+    
+  
+    <rect x="454.0" y="400.0" width="170.79999999999998" height="244.0"
+          rx="6" fill="#1a1a1a" stroke="#FF0074" stroke-width="2"/>
+    <text x="539.4" y="690.0" text-anchor="middle">61 mm depth</text>
+    
+  <g font-family="Arial, sans-serif" font-size="12" fill="#222">
+    <text x="80" y="700">Corner radius R28 mm · wall ~3.0 mm · glass 2 mm recess</text>
+    <text x="80" y="718">Rear: M4 bosses, PoE gland Ø12, 2× dry-contact relay, 12–24 V option</text>
+    <text x="80" y="736">Finish: black anodize + silver rim · LED bar light-pink · logo laser-etch bottom</text>
+    <text x="80" y="754">This drawing is for quoting. Production STEP after first-article sign-off.</text>
+  </g>
+</svg>

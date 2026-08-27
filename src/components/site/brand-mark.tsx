@@ -44,18 +44,18 @@ export function BrandMark({
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M10.2 15.2 L16.2 10.2 L22.2 15.2 Z" />
-        <path d="M7.6 15.2 H24.8" />
-        <circle cx="16.2" cy="19" r="2.7" />
-        <path d="M15.1 18.3 L17.3 19.7" />
-        <path d="M17.3 18.3 L15.1 19.7" />
-        <path d="M16.2 21.7 V24" />
-        <path d="M7.4 22.8 L16.2 23.5 L24.8 22.8" />
-        <path d="M16.2 24 L11.2 30" />
-        <path d="M16.2 24 L21.2 30" />
+        <path d="M10.4 15 L16.2 9.2 L22 15 Z" />
+        <path d="M7.4 15 H24.8" />
+        <circle cx="16.2" cy="19.1" r="2.65" />
+        <path d="M15.1 18.3 L17.3 19.9" />
+        <path d="M17.3 18.3 L15.1 19.9" />
+        <path d="M16.2 21.75 V23.6" />
+        <path d="M7.2 23 L16.2 23.7 L25 23" />
+        <path d="M16.2 23.7 L11.2 30.2" />
+        <path d="M16.2 23.7 L21.2 30.2" />
       </g>
       {hideCrow ? null : (
-        <g transform="translate(8.2,4)">
+        <g transform="translate(4.6,3.1)">
           <path
             className="fill-crow-tail"
             d="M7.2 3.2 C10.6 0.6 17 2.4 17.2 7.2 C14 8.4 10 7.2 7.6 4.6 Z"

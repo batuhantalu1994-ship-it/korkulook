@@ -1,0 +1,36 @@
+KORKU LOOK — OEM RFQ (Look 8 + Look 12)
+Brand: KorkuLook
+Site: https://korkulook.vercel.app
+WhatsApp: +1 310 867 1603
+
+TARGET
+Outdoor Android video intercom, own brand, Turkey multifamily + industrial.
+Software is ours (kiosk APK + phone PWA). Quote housing + board + camera + audio + relays.
+
+LOOK 8  (portrait hang)
+  Envelope 142 × 292 × 61 mm    corner R28 mm
+  8" class touch, IP65, PoE 802.3at, optional 12–24 V, 4G SIM
+  2× dry-contact relay (door + gate), Wiegand or OSDP
+  LED bar light-pink, camera top-center, logo laser-etch bottom
+
+LOOK 12 (landscape hang)
+  Envelope 315 × 220 × 61 mm    corner R36 mm
+  10–12" class touch, same electrical as Look 8
+  Branding: line-art scarecrow + KORKU (white on #FF0074) / LOOK (white on black)
+
+MATERIALS
+  Aluminum, black anodize, silver rim, IK08+, −20 to +55 C
+  Front glass 2 mm recess. Rear M4 bosses, PoE gland Ø12
+
+SOFTWARE
+  Android 12+ kiosk, our APK, no vendor cloud
+  GPIO documented
+
+QTY
+  EVT 10 (6× Look 8, 4× Look 12) — CNC fascia OK
+  DVT 50
+  Year-1 300–800
+
+PLEASE SPLIT
+  A) housing-only   B) full board+camera+relays
+  NRE, tooling, unit EXW, lead time, MOQ, first sample date

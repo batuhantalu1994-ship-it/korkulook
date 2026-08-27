@@ -45,8 +45,17 @@ export const messages = {
     products: {
       kicker: "KorkuLookla modern kontrol.",
       title: "Kiosk bizim, yazılım bizim.",
-      look8: { t: "Look 8", d: "Apartman ve küçük site girişi. 8\" dış ortam dokunmatik, PoE, 4G yedek." },
-      look12: { t: "Look 12", d: "Rezidans ve site ana kapısı. Büyük dizin, gece IR." },
+      disclaimer: "Görseller gerçek üründen büyük görünebilir.",
+      look8: {
+        t: "Look 8",
+        d: "Apartman ve yan kapı. 8\" dış ortam, yüksek gövde, büyük köşe yarıçapı. PoE, 4G yedek.",
+        size: "292 × 142 × 61 mm · dikey",
+      },
+      look12: {
+        t: "Look 12",
+        d: "Site ana girişi. Kare squircle alüminyum, cam yüz, altta scarecrow. Büyük dizin, gece IR.",
+        size: "315 × 220 × 61 mm · yatay",
+      },
       app: { t: "Kullanıcı uygulaması", d: "Kaydır-aç, görüntülü çağrı, ziyaretçi geçişi, kargo PIN. WhatsApp ile de kapı açılır." },
       panel: { t: "Yönetim paneli", d: "Daireler, yetkiler, kayıtlar, kargo firmaları, aidat-dostu fatura özeti." },
     },
@@ -111,7 +120,7 @@ export const messages = {
     },
     demo: {
       kiosk: "Kiosk",
-      phone: "Sakin",
+      phone: "Kullanıcı",
       admin: "Yönetim",
       search: "İsim veya daire",
       directory: "Dizin",
@@ -262,8 +271,17 @@ export const messages = {
     products: {
       kicker: "Modern control with KorkuLook.",
       title: "The kiosk is ours. The software is ours.",
-      look8: { t: "Look 8", d: "Apartments and small sites. 8\" outdoor touch, PoE, 4G fallback." },
-      look12: { t: "Look 12", d: "Residence and main gate. Large directory, night IR." },
+      disclaimer: "Images may appear larger than the actual product.",
+      look8: {
+        t: "Look 8",
+        d: "Apartments and side doors. 8\" outdoor, tall body, large corner radius. PoE, 4G fallback.",
+        size: "292 × 142 × 61 mm · portrait",
+      },
+      look12: {
+        t: "Look 12",
+        d: "Main gate. Square squircle aluminum, glass face, scarecrow at the bottom. Large directory, night IR.",
+        size: "315 × 220 × 61 mm · landscape",
+      },
       app: { t: "User app", d: "Swipe to open, video call, guest pass, cargo PIN. Unlock via WhatsApp too." },
       panel: { t: "Site console", d: "Units, credentials, logs, carriers, dues-friendly billing." },
     },
@@ -328,7 +346,7 @@ export const messages = {
     },
     demo: {
       kiosk: "Kiosk",
-      phone: "Resident",
+      phone: "User",
       admin: "Management",
       search: "Name or unit",
       directory: "Directory",

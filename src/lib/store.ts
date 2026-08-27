@@ -53,7 +53,7 @@ export type CallState = {
   startedAt: number;
 } | null;
 
-export type KioskTab = "directory" | "pin" | "qr";
+export type KioskTab = "home" | "directory" | "pin" | "qr";
 export type KioskFlash = { kind: "ok" | "no"; textTr: string; textEn: string } | null;
 
 export type WaMsg = {
@@ -148,7 +148,7 @@ export const useKorku = create<State>()(
       doorOpen: false,
       openDoors: emptyOpenDoors(),
       lastDoor: null,
-      kioskTab: "directory",
+      kioskTab: "home",
       kioskQuery: "",
       kioskFlash: null,
       actingAs: "r1",
@@ -383,7 +383,7 @@ export const useKorku = create<State>()(
           doorOpen: false,
           openDoors: emptyOpenDoors(),
           lastDoor: null,
-          kioskTab: "directory",
+          kioskTab: "home",
           kioskQuery: "",
           kioskFlash: null,
           actingAs: "r1",

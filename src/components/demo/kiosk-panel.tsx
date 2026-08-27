@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Phone, Hash, QrCode, Search, Video } from "lucide-react";
+import { Phone, Hash, QrCode, Search, Video, Truck, Shield } from "lucide-react";
 import { useKorku } from "@/lib/store";
 import { doorName } from "@/lib/doors";
 import { useT } from "@/lib/use-t";
@@ -23,6 +23,10 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
   const hangup = useKorku((s) => s.hangup);
   const tryPin = useKorku((s) => s.tryPin);
   const tryPass = useKorku((s) => s.tryPass);
+
+  useEffect(() => {
+    if (compact) setTab("home");
+  }, [compact, setTab]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -79,6 +83,7 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
         </div>
       ) : (
         <>
+          {tab !== "home" ? (
           <div className="grid grid-cols-3 border-b border-border">
             {(
               [
@@ -103,9 +108,25 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
               </button>
             ))}
           </div>
+          ) : null}
+
+          {tab === "home" ? (
+            <HomeTiles
+              lang={lang}
+              d={d}
+              onOpen={(id) => setTab(id)}
+            />
+          ) : null}
 
           {tab === "directory" ? (
             <div className="flex min-h-0 flex-1 flex-col">
+              <button
+                type="button"
+                onClick={() => setTab("home")}
+                className="px-4 pt-3 text-left text-xs text-muted hover:text-fg"
+              >
+                ←
+              </button>
               <div className="p-3">
                 <Input
                   value={query}
@@ -159,6 +180,51 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
               : d.doorOpen
             : d.doorClosed}
         </span>
+      </div>
+    </div>
+  );
+}
+
+function HomeTiles({
+  lang,
+  d,
+  onOpen,
+}: {
+  lang: string;
+  d: { directory: string; pin: string; qr: string };
+  onOpen: (id: "directory" | "pin" | "qr") => void;
+}) {
+  const tiles = [
+    { id: "directory" as const, t: lang === "tr" ? "Daireler" : "Directory", Icon: Search },
+    { id: "directory" as const, t: lang === "tr" ? "Yönetim" : "Office", Icon: Shield },
+    { id: "pin" as const, t: lang === "tr" ? "Kapı PIN" : "Door PIN", Icon: Hash },
+    { id: "pin" as const, t: lang === "tr" ? "Kargo" : "Delivery", Icon: Truck },
+    { id: "directory" as const, t: lang === "tr" ? "Görevli" : "Staff", Icon: Phone },
+    { id: "qr" as const, t: d.qr, Icon: QrCode },
+  ];
+  return (
+    <div className="flex min-h-0 flex-1 flex-col">
+      <VisitorStage />
+      <div className="px-3 pt-3">
+        <div className="rounded-lg bg-elevated px-3 py-2">
+          <p className="text-[10px] uppercase tracking-[0.16em] text-accent">
+            Seninkent
+          </p>
+          <p className="text-xs text-muted">İstanbul</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2 p-3">
+        {tiles.map((tile, i) => (
+          <button
+            key={`${tile.id}-${i}`}
+            type="button"
+            onClick={() => onOpen(tile.id)}
+            className="flex items-center gap-2 rounded-xl bg-elevated px-3 py-3 text-left hover:bg-surface"
+          >
+            <tile.Icon className="size-4 text-accent" />
+            <span className="text-xs font-medium">{tile.t}</span>
+          </button>
+        ))}
       </div>
     </div>
   );

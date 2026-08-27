@@ -12,7 +12,7 @@ type Pane = "kiosk" | "phone" | "admin";
 
 function LivePage() {
   const { t } = useT();
-  const [pane, setPane] = useState<Pane>("kiosk");
+  const [pane, setPane] = useState<Pane>("phone");
   const tabs: { id: Pane; label: string }[] = [
     { id: "kiosk", label: t.demo.kiosk },
     { id: "phone", label: t.demo.phone },
@@ -20,7 +20,7 @@ function LivePage() {
   ];
 
   return (
-    <main className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6">
+    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <div className="mb-6 max-w-2xl">
         <p className="text-xs uppercase tracking-[0.2em] text-muted">
           {t.live.kicker}
@@ -29,15 +29,17 @@ function LivePage() {
         <p className="mt-3 text-sm text-muted">{t.demo.liveHint}</p>
       </div>
 
-      <div className="mb-4 grid grid-cols-3 gap-1 rounded-lg bg-elevated p-1 lg:hidden">
+      <div className="mb-4 grid grid-cols-3 gap-1 rounded-lg bg-elevated p-1">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setPane(tab.id)}
             className={cn(
-              "h-11 rounded-md text-sm",
-              pane === tab.id ? "bg-bg text-fg" : "text-muted",
+              "h-11 rounded-md text-sm font-medium transition-colors",
+              pane === tab.id
+                ? "bg-accent text-accent-fg"
+                : "text-muted hover:text-fg",
             )}
           >
             {tab.label}
@@ -45,26 +47,9 @@ function LivePage() {
         ))}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className={cn(pane === "kiosk" ? "block" : "hidden", "lg:block")}>
-          <p className="mb-2 hidden text-xs uppercase tracking-wider text-muted lg:block">
-            {t.demo.kiosk}
-          </p>
-          <KioskPanel />
-        </div>
-        <div className={cn(pane === "phone" ? "block" : "hidden", "lg:block")}>
-          <p className="mb-2 hidden text-xs uppercase tracking-wider text-muted lg:block">
-            {t.demo.phone}
-          </p>
-          <ResidentPanel />
-        </div>
-        <div className={cn(pane === "admin" ? "block" : "hidden", "lg:block")}>
-          <p className="mb-2 hidden text-xs uppercase tracking-wider text-muted lg:block">
-            {t.demo.admin}
-          </p>
-          <AdminPanel />
-        </div>
-      </div>
+      {pane === "kiosk" ? <KioskPanel /> : null}
+      {pane === "phone" ? <ResidentPanel /> : null}
+      {pane === "admin" ? <AdminPanel /> : null}
     </main>
   );
 }

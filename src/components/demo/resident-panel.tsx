@@ -9,7 +9,7 @@ import { useT } from "@/lib/use-t";
 import { cn } from "@/lib/utils";
 import { WhatsAppThread } from "./whatsapp-thread";
 
-export function ResidentPanel() {
+export function ResidentPanel({ compact = false }: { compact?: boolean }) {
   const { t, lang } = useT();
   const d = t.demo;
   const residents = useKorku((s) => s.residents);
@@ -35,7 +35,7 @@ export function ResidentPanel() {
   const [lastCargo, setLastCargo] = useState<string | null>(null);
 
   return (
-    <div className="flex min-h-[560px] flex-col overflow-hidden rounded-xl border border-border-strong bg-bg">
+    <div className="flex min-h-[420px] flex-col overflow-hidden rounded-xl border border-border-strong bg-bg">
       <div className="border-b border-border px-4 py-3">
         <p className="text-xs uppercase tracking-wider text-muted">{d.youAre}</p>
         <select
@@ -76,7 +76,7 @@ export function ResidentPanel() {
       ) : null}
 
       <div className="flex flex-1 flex-col gap-5 p-4">
-        <WhatsAppThread />
+        {compact ? null : <WhatsAppThread />}
         <div className="space-y-3">
           <p className="text-xs uppercase tracking-wider text-muted">{d.swipe}</p>
           {doors.map((door) => (
@@ -91,6 +91,8 @@ export function ResidentPanel() {
           ))}
         </div>
 
+        {compact ? null : (
+        <>
         <div className="space-y-2">
           <p className="text-xs uppercase tracking-wider text-muted">{d.pass}</p>
           <Label htmlFor="pass-label">{d.pass}</Label>
@@ -159,6 +161,8 @@ export function ResidentPanel() {
             </p>
           )}
         </div>
+        </>
+        )}
       </div>
     </div>
   );
