@@ -54,7 +54,7 @@ export const messages = {
       look12: {
         t: "Look 12",
         d: "Site ana girişi. Kare squircle alüminyum, cam yüz, altta scarecrow. Büyük dizin, gece IR.",
-        size: "315 × 220 × 61 mm · yatay",
+        size: "315 × 200 × 61 mm · yatay",
       },
       app: { t: "Kullanıcı uygulaması", d: "Kaydır-aç, görüntülü çağrı, ziyaretçi geçişi, kargo PIN. WhatsApp ile de kapı açılır." },
       panel: { t: "Yönetim paneli", d: "Daireler, yetkiler, kayıtlar, kargo firmaları, aidat-dostu fatura özeti." },
@@ -280,7 +280,7 @@ export const messages = {
       look12: {
         t: "Look 12",
         d: "Main gate. Square squircle aluminum, glass face, scarecrow at the bottom. Large directory, night IR.",
-        size: "315 × 220 × 61 mm · landscape",
+        size: "315 × 200 × 61 mm · landscape",
       },
       app: { t: "User app", d: "Swipe to open, video call, guest pass, cargo PIN. Unlock via WhatsApp too." },
       panel: { t: "Site console", d: "Units, credentials, logs, carriers, dues-friendly billing." },

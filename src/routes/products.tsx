@@ -15,34 +15,34 @@ function ProductsPage() {
       <p className="mt-10 text-xs uppercase tracking-[0.2em] text-muted">{p.kicker}</p>
       <h1 className="mt-4 max-w-2xl text-4xl">{p.title}</h1>
 
-      <figure className="mt-12 overflow-hidden rounded-xl border border-border bg-elevated">
+      <figure className="mt-12 overflow-hidden rounded-xl border border-border bg-bg">
         <img
           src="/oem/look-12.jpg"
-          alt="Look 12 landscape kiosk"
-          className="w-full"
+          alt="Look 12"
+          className="mx-auto w-full max-w-4xl object-contain"
         />
       </figure>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <article className="overflow-hidden rounded-xl border border-border bg-surface">
-          <img src="/oem/look-8.jpg" alt="Look 8" className="w-full" />
+          <div className="bg-bg px-6 py-4">
+            <img src="/oem/look-8.jpg" alt="Look 8" className="mx-auto max-h-[520px] w-auto object-contain" />
+          </div>
           <div className="p-6">
             <h2 className="text-2xl">{p.look8.t}</h2>
             <p className="mt-3 text-sm text-muted">{p.look8.d}</p>
           </div>
         </article>
         <article className="overflow-hidden rounded-xl border border-border bg-surface">
-          <img src="/oem/look-12.jpg" alt="Look 12" className="w-full" />
+          <div className="bg-bg px-6 py-4">
+            <img src="/oem/look-12.jpg" alt="Look 12" className="w-full object-contain" />
+          </div>
           <div className="p-6">
             <h2 className="text-2xl">{p.look12.t}</h2>
             <p className="mt-3 text-sm text-muted">{p.look12.d}</p>
           </div>
         </article>
       </div>
-
-      <figure className="mt-8 overflow-hidden rounded-xl border border-border bg-elevated">
-        <img src="/oem/look-pair.jpg" alt="Look 12 and Look 8" className="w-full" />
-      </figure>
 
       <div className="mt-12 grid gap-4 md:grid-cols-2">
         {[p.app, p.panel].map((item) => (
