@@ -17,6 +17,7 @@ import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as OperateRouteImport } from './routes/operate'
 import { Route as PlaybookRouteImport } from './routes/playbook'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as QuoteRouteImport } from './routes/quote'
 
@@ -60,6 +61,11 @@ const PlaybookRoute = PlaybookRouteImport.update({
   path: '/playbook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsRoute = ProductsRouteImport.update({
   id: '/products',
   path: '/products',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/live': typeof LiveRoute
   '/operate': typeof OperateRoute
   '/playbook': typeof PlaybookRoute
+  '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/quote': typeof QuoteRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/live': typeof LiveRoute
   '/operate': typeof OperateRoute
   '/playbook': typeof PlaybookRoute
+  '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/quote': typeof QuoteRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/live': typeof LiveRoute
   '/operate': typeof OperateRoute
   '/playbook': typeof PlaybookRoute
+  '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/quote': typeof QuoteRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/live'
     | '/operate'
     | '/playbook'
+    | '/privacy'
     | '/products'
     | '/quote'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/live'
     | '/operate'
     | '/playbook'
+    | '/privacy'
     | '/products'
     | '/quote'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/live'
     | '/operate'
     | '/playbook'
+    | '/privacy'
     | '/products'
     | '/quote'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   LiveRoute: typeof LiveRoute
   OperateRoute: typeof OperateRoute
   PlaybookRoute: typeof PlaybookRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRoute
   QuoteRoute: typeof QuoteRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaybookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products': {
       id: '/products'
       path: '/products'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   LiveRoute: LiveRoute,
   OperateRoute: OperateRoute,
   PlaybookRoute: PlaybookRoute,
+  PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRoute,
   QuoteRoute: QuoteRoute,
 }

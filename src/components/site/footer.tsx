@@ -4,6 +4,7 @@ import { BrandMark, Wordmark } from "./brand-mark";
 
 export function Footer() {
   const { t } = useT();
+  const f = t.footer;
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
@@ -27,6 +28,28 @@ export function Footer() {
           <Link to="/industries" className="hover:text-accent">
             {t.nav.industries}
           </Link>
+        </div>
+      </div>
+
+      <div className="border-t border-border px-4 py-12 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl font-display tracking-wide text-accent transition-colors duration-300 hover:text-transparent">
+          <p className="text-2xl font-semibold uppercase sm:text-3xl">
+            {f.years}
+          </p>
+          <p className="mt-3 text-sm font-medium uppercase tracking-[0.18em] sm:text-base">
+            <span>{f.reserved}</span>
+            {" · "}
+            <Link to="/privacy" className="underline-offset-4 hover:underline">
+              {f.legal}
+            </Link>
+            {" · "}
+            <Link to="/privacy" className="underline-offset-4 hover:underline">
+              {f.privacy}
+            </Link>
+          </p>
+          <p className="mt-4 text-xs font-medium uppercase tracking-[0.14em] sm:text-sm">
+            {f.owner}
+          </p>
         </div>
       </div>
     </footer>

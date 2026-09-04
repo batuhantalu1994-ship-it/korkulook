@@ -110,6 +110,11 @@ export const messages = {
     footer: {
       line: "KorkuLook · İstanbul. Kapı, kargo, şantiye, çiftlik.",
       kvkk: "KVKK aydınlatması",
+      years: "© 2026 – 2027.",
+      reserved: "All rights reserved",
+      legal: "Legal",
+      privacy: "Privacy",
+      owner: "KorkuLook bir JEFE İç ve Dış Ticaret Ltd. Şti. ürünüdür.",
     },
     how: {
       kicker: "Akış",
@@ -336,6 +341,11 @@ export const messages = {
     footer: {
       line: "KorkuLook · Istanbul. Doors, parcels, jobsites, farms.",
       kvkk: "KVKK notice",
+      years: "© 2026 – 2027.",
+      reserved: "All rights reserved",
+      legal: "Legal",
+      privacy: "Privacy",
+      owner: "KorkuLook is a product of JEFE İç ve Dış Ticaret Ltd. Şti.",
     },
     how: {
       kicker: "Flow",
