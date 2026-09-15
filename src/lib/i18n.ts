@@ -157,6 +157,8 @@ export const messages = {
       denied: "Reddedildi",
       incoming: "Kapıda biri var",
       liveHint: "Kioskta bir isme dokunun. WhatsApp’a görüntü düşer, kapıyı kaydırın.",
+      wakeTitle: "Hoşgeldiniz",
+      wakeTap: "Açmak için dokunun",
     },
     industriesPage: {
       kicker: "Sektörler",
@@ -388,6 +390,8 @@ export const messages = {
       denied: "Denied",
       incoming: "Someone at the door",
       liveHint: "Tap a name on the kiosk. Video lands on WhatsApp. Swipe the door.",
+      wakeTitle: "Welcome",
+      wakeTap: "Tap to open",
     },
     industriesPage: {
       kicker: "Industries",

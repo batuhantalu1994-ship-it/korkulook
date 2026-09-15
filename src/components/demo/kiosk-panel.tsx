@@ -1,13 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
-import { Phone, Hash, QrCode, Search, Video, Truck, Shield } from "lucide-react";
+import { KeyRound, Phone, Hash, QrCode, Search, Users } from "lucide-react";
 import { useKorku } from "@/lib/store";
 import { doorName } from "@/lib/doors";
 import { useT } from "@/lib/use-t";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { BrandMark } from "@/components/site/brand-mark";
 
-export function KioskPanel({ compact = false }: { compact?: boolean }) {
+export function KioskPanel({
+  compact = false,
+  immersive = false,
+}: {
+  compact?: boolean;
+  immersive?: boolean;
+}) {
   const { t, lang } = useT();
   const d = t.demo;
   const tab = useKorku((s) => s.kioskTab);
@@ -23,10 +30,20 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
   const hangup = useKorku((s) => s.hangup);
   const tryPin = useKorku((s) => s.tryPin);
   const tryPass = useKorku((s) => s.tryPass);
+  const [idle, setIdle] = useState(!compact);
 
   useEffect(() => {
-    if (compact) setTab("home");
+    if (compact) {
+      setTab("home");
+      setIdle(false);
+    }
   }, [compact, setTab]);
+
+  useEffect(() => {
+    if (compact || idle || call || flash || tab !== "home" || doorOpen) return;
+    const id = window.setTimeout(() => setIdle(true), 25000);
+    return () => window.clearTimeout(id);
+  }, [compact, idle, call, flash, tab]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -37,35 +54,45 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
   }, [residents, query]);
 
   const called = residents.find((r) => r.id === call?.residentId);
+  const onHome = !idle && tab === "home" && !call && !flash;
+  const chrome = compact || (!idle && !onHome);
 
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-lg border-2 border-accent bg-bg",
-        compact ? "min-h-[420px]" : "min-h-[560px]",
+        "flex flex-col overflow-hidden bg-bg",
+        immersive
+          ? "h-full min-h-0 rounded-none border-0"
+          : "rounded-lg border-2 border-accent",
+        !immersive && (compact ? "min-h-[420px]" : "min-h-[560px]"),
       )}
     >
-      <div className="flex items-center justify-between border-b border-border px-3 py-2">
-        <div className="flex items-center gap-2">
-          <span className="size-2 rounded-full bg-live" />
-          <span className="text-xs font-medium tracking-wide text-muted">
-            LOOK 8 · SENINKENT
-          </span>
+      {chrome ? (
+        <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="size-2 rounded-full bg-live" />
+            <span className="text-xs font-medium tracking-wide text-muted">
+              LOOK 8 · SENINKENT
+            </span>
+          </div>
+          <KioskClock />
         </div>
-        <KioskClock />
-      </div>
+      ) : null}
 
-      {flash ? (
-        <div
-          className={cn(
-            "flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center",
-                flash.kind === "ok" ? "bg-accent text-accent-fg" : "bg-fg text-bg",
-          )}
-        >
+      {idle && !compact ? (
+        <WakeScreen
+          title={d.wakeTitle}
+          tap={d.wakeTap}
+          onWake={() => {
+            setIdle(false);
+            setTab("home");
+          }}
+        />
+      ) : flash && flash.kind === "no" ? (
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 bg-fg px-6 text-center text-bg">
           <p className="font-display text-3xl">
             {lang === "tr" ? flash.textTr : flash.textEn}
           </p>
-          {doorOpen ? <p className="text-sm text-live">{d.doorOpen}</p> : null}
         </div>
       ) : call ? (
         <div className="flex flex-1 flex-col">
@@ -84,37 +111,38 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
       ) : (
         <>
           {tab !== "home" ? (
-          <div className="grid grid-cols-3 border-b border-border">
-            {(
-              [
-                ["directory", Search, d.directory],
-                ["pin", Hash, d.pin],
-                ["qr", QrCode, d.qr],
-              ] as const
-            ).map(([id, Icon, label]) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setTab(id)}
-                className={cn(
-                  "flex h-12 items-center justify-center gap-1.5 text-xs font-medium",
-                  tab === id
-                    ? "bg-elevated text-fg"
-                    : "text-muted hover:text-fg",
-                )}
-              >
-                <Icon className="size-3.5" />
-                {label}
-              </button>
-            ))}
-          </div>
+            <div className="grid grid-cols-3 border-b border-border">
+              {(
+                [
+                  ["directory", Search, d.directory],
+                  ["pin", Hash, d.pin],
+                  ["qr", QrCode, d.qr],
+                ] as const
+              ).map(([id, Icon, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setTab(id)}
+                  className={cn(
+                    "flex h-12 items-center justify-center gap-1.5 text-xs font-medium",
+                    tab === id
+                      ? "bg-elevated text-fg"
+                      : "text-muted hover:text-fg",
+                  )}
+                >
+                  <Icon className="size-3.5" />
+                  {label}
+                </button>
+              ))}
+            </div>
           ) : null}
 
           {tab === "home" ? (
             <HomeTiles
               lang={lang}
-              d={d}
+              doorOpen={doorOpen}
               onOpen={(id) => setTab(id)}
+              onStaff={() => startCall("r4")}
             />
           ) : null}
 
@@ -164,65 +192,126 @@ export function KioskPanel({ compact = false }: { compact?: boolean }) {
             </div>
           ) : null}
 
-          {tab === "pin" ? <PinPad onSubmit={tryPin} label={d.enterPin} /> : null}
-          {tab === "qr" ? <PassPad onSubmit={tryPass} label={d.qr} /> : null}
+          {tab === "pin" ? (
+            <PinPad
+              onSubmit={(code) => {
+                tryPin(code);
+                setTab("home");
+              }}
+              label={d.enterPin}
+            />
+          ) : null}
+          {tab === "qr" ? (
+            <PassPad
+              onSubmit={(code) => {
+                tryPass(code);
+                setTab("home");
+              }}
+              label={d.qr}
+            />
+          ) : null}
         </>
       )}
 
-      <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs text-subtle">
-        <span className="inline-flex items-center gap-1">
-          <Video className="size-3" /> KorkuLook
-        </span>
-        <span className={doorOpen ? "text-live" : ""}>
-          {doorOpen
-            ? lastDoor
-              ? doorName(lastDoor, lang)
-              : d.doorOpen
-            : d.doorClosed}
-        </span>
-      </div>
+      {chrome ? (
+        <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs text-subtle">
+          <span className="inline-flex items-center gap-1">KorkuLook</span>
+          <span className={doorOpen ? "text-live" : ""}>
+            {doorOpen
+              ? lastDoor
+                ? doorName(lastDoor, lang)
+                : d.doorOpen
+              : d.doorClosed}
+          </span>
+        </div>
+      ) : null}
     </div>
+  );
+}
+
+function WakeScreen({
+  title,
+  tap,
+  onWake,
+}: {
+  title: string;
+  tap: string;
+  onWake: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onWake}
+      className="relative flex min-h-0 flex-1 flex-col items-center px-8 py-10 text-center text-white"
+      style={{
+        background:
+          "linear-gradient(180deg, #FF0074 0%, #FF2E82 32%, #FF7AAD 64%, #FFD6E8 100%)",
+      }}
+    >
+      <p className="mt-[12%] font-display text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl">
+        {title}
+      </p>
+      <p className="mt-auto mb-auto text-base font-medium tracking-wide text-white/90 sm:text-lg">
+        {tap}
+      </p>
+      <div className="mt-auto flex flex-col items-center gap-2 pb-2">
+        <BrandMark className="size-10 text-white" />
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-white/80">
+          KorkuLook
+        </p>
+      </div>
+    </button>
   );
 }
 
 function HomeTiles({
   lang,
-  d,
+  doorOpen,
   onOpen,
+  onStaff,
 }: {
   lang: string;
-  d: { directory: string; pin: string; qr: string };
+  doorOpen: boolean;
   onOpen: (id: "directory" | "pin" | "qr") => void;
+  onStaff: () => void;
 }) {
+  const tr = lang === "tr";
   const tiles = [
-    { id: "directory" as const, t: lang === "tr" ? "Daireler" : "Directory", Icon: Search },
-    { id: "directory" as const, t: lang === "tr" ? "Yönetim" : "Office", Icon: Shield },
-    { id: "pin" as const, t: lang === "tr" ? "Kapı PIN" : "Door PIN", Icon: Hash },
-    { id: "pin" as const, t: lang === "tr" ? "Kargo" : "Delivery", Icon: Truck },
-    { id: "directory" as const, t: lang === "tr" ? "Görevli" : "Staff", Icon: Phone },
-    { id: "qr" as const, t: d.qr, Icon: QrCode },
+    { id: "directory" as const, t: tr ? "Daireler #" : "Units #", Icon: Users, run: () => onOpen("directory") },
+    { id: "staff" as const, t: tr ? "Görevli" : "Staff", Icon: Phone, run: onStaff },
+    { id: "pin" as const, t: tr ? "Kapı PIN" : "Door PIN", Icon: Hash, run: () => onOpen("pin") },
+    { id: "qr" as const, t: tr ? "Geçici PIN" : "Guest PIN", Icon: KeyRound, run: () => onOpen("qr") },
   ];
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <VisitorStage />
-      <div className="px-3 pt-3">
-        <div className="rounded-lg bg-elevated px-3 py-2">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-accent">
-            Seninkent
-          </p>
-          <p className="text-xs text-muted">İstanbul</p>
+    <div className="grid min-h-0 flex-1 grid-cols-2 gap-2 bg-black p-2">
+      <div className="flex min-h-0 flex-col gap-2">
+        <VisitorStage live doorOpen={doorOpen} />
+        <div className="flex items-center gap-3 rounded-2xl bg-[#1c1c1e] p-3">
+          <BrandMark className="size-11 shrink-0 rounded-lg bg-accent p-1 text-fg" />
+          <div className="min-w-0">
+            <p className="truncate font-display text-sm font-semibold">Seninkent</p>
+            <p className="text-[11px] text-muted">İstanbul</p>
+            <p
+              className={cn(
+                "mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-medium",
+                doorOpen ? "bg-accent text-accent-fg" : "bg-white/10 text-muted",
+              )}
+            >
+              {doorOpen ? (tr ? "Kapı açık" : "Door open") : tr ? "Kapı kilitli" : "Door locked"}
+            </p>
+          </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-2 p-3">
-        {tiles.map((tile, i) => (
+      <div className="grid min-h-0 grid-cols-2 grid-rows-2 gap-2">
+        {tiles.map((tile) => (
           <button
-            key={`${tile.id}-${i}`}
+            key={tile.t}
             type="button"
-            onClick={() => onOpen(tile.id)}
-            className="flex items-center gap-2 rounded-xl bg-elevated px-3 py-3 text-left hover:bg-surface"
+            onClick={tile.run}
+            className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#1c1c1e] text-white transition-colors hover:bg-[#2c2c2e]"
           >
-            <tile.Icon className="size-4 text-accent" />
-            <span className="text-xs font-medium">{tile.t}</span>
+            <tile.Icon className="size-7 stroke-[1.5]" />
+            <span className="text-[11px] font-medium tracking-wide">{tile.t}</span>
           </button>
         ))}
       </div>
@@ -246,18 +335,41 @@ function KioskClock() {
   );
 }
 
-function VisitorStage() {
+function VisitorStage({
+  live = false,
+  doorOpen = false,
+}: {
+  live?: boolean;
+  doorOpen?: boolean;
+}) {
   return (
-    <div className="relative flex h-40 items-end justify-center bg-elevated">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(143,165,138,0.18),transparent_60%)]" />
-      <svg viewBox="0 0 120 90" className="relative h-full w-auto text-muted">
-        <circle cx="60" cy="32" r="16" fill="currentColor" opacity="0.55" />
+    <div
+      className={cn(
+        "relative flex items-end justify-center overflow-hidden bg-[#141416]",
+        live ? "min-h-0 flex-1 rounded-2xl" : "h-40",
+      )}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,0,116,0.18),transparent_62%)]" />
+      {live ? (
+        <span className="absolute left-2 top-2 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white/80">
+          Kamera
+        </span>
+      ) : null}
+      <svg viewBox="0 0 120 90" className="relative h-[85%] w-auto text-white/55">
+        <circle cx="60" cy="32" r="16" fill="currentColor" opacity="0.7" />
         <path
           d="M24 90c4-28 20-42 36-42s32 14 36 42"
           fill="currentColor"
-          opacity="0.45"
+          opacity="0.55"
         />
       </svg>
+      {doorOpen ? (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/35 p-3">
+          <p className="rounded-2xl bg-accent px-4 py-3 text-center font-display text-lg font-bold leading-tight text-accent-fg shadow-lg sm:text-xl">
+            Kapı açıldı, girebilirsiniz!
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as CostRouteImport } from './routes/cost'
 import { Route as HowRouteImport } from './routes/how'
 import { Route as IndustriesRouteImport } from './routes/industries'
+import { Route as KioskRouteImport } from './routes/kiosk'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as OperateRouteImport } from './routes/operate'
 import { Route as PlaybookRouteImport } from './routes/playbook'
@@ -44,6 +45,11 @@ const HowRoute = HowRouteImport.update({
 const IndustriesRoute = IndustriesRouteImport.update({
   id: '/industries',
   path: '/industries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KioskRoute = KioskRouteImport.update({
+  id: '/kiosk',
+  path: '/kiosk',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/cost': typeof CostRoute
   '/how': typeof HowRoute
   '/industries': typeof IndustriesRoute
+  '/kiosk': typeof KioskRoute
   '/live': typeof LiveRoute
   '/operate': typeof OperateRoute
   '/playbook': typeof PlaybookRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/cost': typeof CostRoute
   '/how': typeof HowRoute
   '/industries': typeof IndustriesRoute
+  '/kiosk': typeof KioskRoute
   '/live': typeof LiveRoute
   '/operate': typeof OperateRoute
   '/playbook': typeof PlaybookRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/cost': typeof CostRoute
   '/how': typeof HowRoute
   '/industries': typeof IndustriesRoute
+  '/kiosk': typeof KioskRoute
   '/live': typeof LiveRoute
   '/operate': typeof OperateRoute
   '/playbook': typeof PlaybookRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/cost'
     | '/how'
     | '/industries'
+    | '/kiosk'
     | '/live'
     | '/operate'
     | '/playbook'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/cost'
     | '/how'
     | '/industries'
+    | '/kiosk'
     | '/live'
     | '/operate'
     | '/playbook'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/cost'
     | '/how'
     | '/industries'
+    | '/kiosk'
     | '/live'
     | '/operate'
     | '/playbook'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   CostRoute: typeof CostRoute
   HowRoute: typeof HowRoute
   IndustriesRoute: typeof IndustriesRoute
+  KioskRoute: typeof KioskRoute
   LiveRoute: typeof LiveRoute
   OperateRoute: typeof OperateRoute
   PlaybookRoute: typeof PlaybookRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/industries'
       fullPath: '/industries'
       preLoaderRoute: typeof IndustriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kiosk': {
+      id: '/kiosk'
+      path: '/kiosk'
+      fullPath: '/kiosk'
+      preLoaderRoute: typeof KioskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   CostRoute: CostRoute,
   HowRoute: HowRoute,
   IndustriesRoute: IndustriesRoute,
+  KioskRoute: KioskRoute,
   LiveRoute: LiveRoute,
   OperateRoute: OperateRoute,
   PlaybookRoute: PlaybookRoute,

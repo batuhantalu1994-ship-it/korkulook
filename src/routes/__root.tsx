@@ -1,4 +1,4 @@
-import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from "@tanstack/react-router";
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { Header } from "@/components/site/header";
@@ -12,13 +12,15 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: APP_NAME },
       {
         name: "description",
         content: "Evini geleceğe taşı. Video interkom, kullanıcı uygulaması ve site paneli.",
       },
       { name: "theme-color", content: "#000000" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -37,32 +39,40 @@ export const Route = createRootRoute({
 });
 
 function RootLayout() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const kiosk = pathname === "/kiosk";
   return (
     <html lang="tr" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className={kiosk ? "bg-bg" : undefined}>
         <PreviewHostBridge />
         <AuthProvider>
-          <div className="flex min-h-dvh flex-col">
-            <Header />
-            <div className="flex-1">
-              <Outlet />
+          {kiosk ? (
+            <Outlet />
+          ) : (
+            <div className="flex min-h-dvh flex-col">
+              <Header />
+              <div className="flex-1">
+                <Outlet />
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-          <Toaster
-            theme="dark"
-            position="bottom-center"
-            toastOptions={{
-              style: {
-                background: "#000000",
-                color: "#ffffff",
-                border: "1px solid #FF0074",
-              },
-            }}
-          />
+          )}
+          {kiosk ? null : (
+            <Toaster
+              theme="dark"
+              position="bottom-center"
+              toastOptions={{
+                style: {
+                  background: "#000000",
+                  color: "#ffffff",
+                  border: "1px solid #FF0074",
+                },
+              }}
+            />
+          )}
         </AuthProvider>
         <Scripts />
       </body>

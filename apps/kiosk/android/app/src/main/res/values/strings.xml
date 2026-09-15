@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KorkuLook</string>
+    <string name="title_activity_main">KorkuLook</string>
+    <string name="package_name">tr.korkulook.kiosk</string>
+    <string name="custom_url_scheme">tr.korkulook.kiosk</string>
+</resources>
