@@ -195,8 +195,7 @@ export function KioskPanel({
           {tab === "pin" ? (
             <PinPad
               onSubmit={(code) => {
-                tryPin(code);
-                setTab("home");
+                if (tryPin(code)) setTab("home");
               }}
               label={d.enterPin}
             />
@@ -204,8 +203,7 @@ export function KioskPanel({
           {tab === "qr" ? (
             <PassPad
               onSubmit={(code) => {
-                tryPass(code);
-                setTab("home");
+                if (tryPass(code)) setTab("home");
               }}
               label={d.qr}
             />
@@ -365,7 +363,7 @@ function VisitorStage({
       </svg>
       {doorOpen ? (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/35 p-3">
-          <p className="rounded-2xl bg-accent px-4 py-3 text-center font-display text-lg font-bold leading-tight text-accent-fg shadow-lg sm:text-xl">
+          <p className="rounded-2xl bg-[#39FF14] px-4 py-3 text-center font-display text-lg font-bold leading-tight text-accent shadow-lg sm:text-xl">
             Kapı açıldı, girebilirsiniz!
           </p>
         </div>
@@ -384,19 +382,27 @@ function PinPad({
   const [code, setCode] = useState("");
   const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "OK"];
   function press(k: string) {
-    if (k === "C") setCode("");
-    else if (k === "OK") {
-      onSubmit(code);
+    if (k === "C") {
       setCode("");
-    } else if (code.length < 5) setCode(code + k);
+      return;
+    }
+    if (k === "OK") {
+      if (code.length >= 4) onSubmit(code);
+      return;
+    }
+    if (code.length >= 5) return;
+    const next = code + k;
+    setCode(next);
+    if (next.length === 4) onSubmit(next);
   }
   return (
     <div className="flex flex-1 flex-col justify-between p-4">
       <div>
         <p className="text-xs text-muted">{label}</p>
         <p className="mt-2 font-mono text-2xl tracking-[0.4em] tabular-nums">
-          {code.padEnd(5, "·")}
+          {code.padEnd(4, "·")}
         </p>
+        <p className="mt-2 text-[11px] text-subtle">Deneme: 4821 · 9001</p>
       </div>
       <div className="grid grid-cols-3 gap-2">
         {keys.map((k) => (

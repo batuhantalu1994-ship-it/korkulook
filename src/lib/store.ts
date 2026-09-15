@@ -118,8 +118,8 @@ type State = {
   decline: () => void;
   hangup: () => void;
   unlock: (source: "phone" | "call" | "admin" | "whatsapp", doorId?: DoorId) => void;
-  tryPin: (code: string) => void;
-  tryPass: (code: string) => void;
+  tryPin: (code: string) => boolean;
+  tryPass: (code: string) => boolean;
   createPass: (label: string, hours: number) => GuestPass;
   addCargo: (carrier: string) => CargoPin;
   addResident: (unit: string, name: string) => void;
@@ -250,7 +250,7 @@ export const useKorku = create<State>()(
               kioskFlash: any ? s.kioskFlash : null,
             };
           });
-        }, 2800);
+        }, 5000);
       },
       tryPin: (code) => {
         const cargo = get().cargo.find((c) => c.code === code);
@@ -279,14 +279,15 @@ export const useKorku = create<State>()(
                 kioskFlash: null,
               };
             });
-          }, 2800);
-        } else {
-          set({
-            kioskFlash: { kind: "no", textTr: "Reddedildi", textEn: "Denied" },
-            logs: [log("denied", "Hatalı PIN", "Bad PIN"), ...get().logs],
-          });
-          window.setTimeout(() => set({ kioskFlash: null }), 1800);
+          }, 5000);
+          return true;
         }
+        set({
+          kioskFlash: { kind: "no", textTr: "Reddedildi", textEn: "Denied" },
+          logs: [log("denied", "Hatalı PIN", "Bad PIN"), ...get().logs],
+        });
+        window.setTimeout(() => set({ kioskFlash: null }), 1800);
+        return false;
       },
       tryPass: (code) => {
         const p = get().passes.find(
@@ -312,14 +313,15 @@ export const useKorku = create<State>()(
                 kioskFlash: null,
               };
             });
-          }, 2800);
-        } else {
-          set({
-            kioskFlash: { kind: "no", textTr: "Geçiş yok", textEn: "No pass" },
-            logs: [log("denied", "Geçersiz QR/geçiş", "Invalid pass"), ...get().logs],
-          });
-          window.setTimeout(() => set({ kioskFlash: null }), 1800);
+          }, 5000);
+          return true;
         }
+        set({
+          kioskFlash: { kind: "no", textTr: "Geçiş yok", textEn: "No pass" },
+          logs: [log("denied", "Geçersiz QR/geçiş", "Invalid pass"), ...get().logs],
+        });
+        window.setTimeout(() => set({ kioskFlash: null }), 1800);
+        return false;
       },
       createPass: (label, hours) => {
         const pass: GuestPass = {
