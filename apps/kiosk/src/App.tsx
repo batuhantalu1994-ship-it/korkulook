@@ -5,12 +5,13 @@ import { subscribeUnlock } from "./relay";
 
 export function App() {
   useEffect(() => {
+    document.documentElement.classList.add("kiosk-mode");
     void bootKioskShell();
     return subscribeUnlock();
   }, []);
 
   return (
-    <div className="flex h-dvh min-h-0 flex-col bg-bg">
+    <div className="flex h-full min-h-0 flex-col bg-bg">
       <KioskPanel immersive />
     </div>
   );

@@ -281,10 +281,10 @@ function HomeTiles({
     { id: "qr" as const, t: tr ? "Geçici PIN" : "Guest PIN", Icon: KeyRound, run: () => onOpen("qr") },
   ];
   return (
-    <div className="grid min-h-0 flex-1 grid-cols-2 gap-2 bg-black p-2">
-      <div className="flex min-h-0 flex-col gap-2">
+    <div className="flex min-h-0 flex-1 flex-col gap-2 bg-black p-2 landscape:flex-row">
+      <div className="flex min-h-0 w-full flex-[1.15] flex-col gap-2 landscape:w-1/2">
         <VisitorStage live doorOpen={doorOpen} />
-        <div className="flex items-center gap-3 rounded-2xl bg-[#1c1c1e] p-3">
+        <div className="flex shrink-0 items-center gap-3 rounded-2xl bg-[#1c1c1e] p-3">
           <BrandMark className="size-11 shrink-0 rounded-lg bg-accent p-1 text-fg" />
           <div className="min-w-0">
             <p className="truncate font-display text-sm font-semibold">Seninkent</p>
@@ -300,7 +300,7 @@ function HomeTiles({
           </div>
         </div>
       </div>
-      <div className="grid min-h-0 grid-cols-2 grid-rows-2 gap-2">
+      <div className="grid min-h-[36%] w-full grid-cols-2 grid-rows-2 gap-2 landscape:h-auto landscape:min-h-0 landscape:w-1/2 landscape:flex-1">
         {tiles.map((tile) => (
           <button
             key={tile.t}
