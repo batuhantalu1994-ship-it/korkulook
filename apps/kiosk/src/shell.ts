@@ -7,14 +7,16 @@ export async function bootKioskShell() {
       await requestWakeLock();
       return;
     }
-    const { StatusBar, Style } = await import("@capacitor/status-bar");
+    const { StatusBar } = await import("@capacitor/status-bar");
     const { KeepAwake } = await import("@capacitor-community/keep-awake");
     const { ScreenOrientation } = await import("@capacitor/screen-orientation");
-    await StatusBar.hide();
-    await StatusBar.setOverlaysWebView({ overlay: true });
-    await StatusBar.setStyle({ style: Style.Dark });
     await KeepAwake.keepAwake();
     await ScreenOrientation.lock({ orientation: "portrait" });
+    try {
+      await StatusBar.hide();
+    } catch {
+      /* One UI can skip this */
+    }
   } catch {
     await requestWakeLock();
   }

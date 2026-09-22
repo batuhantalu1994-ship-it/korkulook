@@ -351,11 +351,7 @@ function VisitorStage({
     navigator.mediaDevices
       ?.getUserMedia({
         audio: false,
-        video: {
-          facingMode: "user",
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-        },
+        video: true,
       })
       .then((s) => {
         if (gone) {
