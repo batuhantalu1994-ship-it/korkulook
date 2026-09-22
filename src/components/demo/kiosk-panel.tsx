@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { KeyRound, Phone, Hash, QrCode, Search, Users } from "lucide-react";
 import { useKorku } from "@/lib/store";
 import { doorName } from "@/lib/doors";
@@ -340,6 +340,41 @@ function VisitorStage({
   live?: boolean;
   doorOpen?: boolean;
 }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [cam, setCam] = useState<"on" | "off">("off");
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    let stream: MediaStream | null = null;
+    let gone = false;
+    navigator.mediaDevices
+      ?.getUserMedia({
+        audio: false,
+        video: {
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+      })
+      .then((s) => {
+        if (gone) {
+          s.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        stream = s;
+        el.srcObject = s;
+        void el.play();
+        setCam("on");
+      })
+      .catch(() => setCam("off"));
+    return () => {
+      gone = true;
+      stream?.getTracks().forEach((t) => t.stop());
+      el.srcObject = null;
+    };
+  }, []);
+
   return (
     <div
       className={cn(
@@ -347,20 +382,34 @@ function VisitorStage({
         live ? "min-h-0 flex-1 rounded-2xl" : "h-40",
       )}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,0,116,0.18),transparent_62%)]" />
+      <video
+        ref={videoRef}
+        className={cn(
+          "absolute inset-0 h-full w-full object-cover",
+          cam === "on" ? "opacity-100" : "opacity-0",
+        )}
+        playsInline
+        muted
+        autoPlay
+      />
+      {cam === "off" ? (
+        <>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,0,116,0.18),transparent_62%)]" />
+          <svg viewBox="0 0 120 90" className="relative h-[85%] w-auto text-white/55">
+            <circle cx="60" cy="32" r="16" fill="currentColor" opacity="0.7" />
+            <path
+              d="M24 90c4-28 20-42 36-42s32 14 36 42"
+              fill="currentColor"
+              opacity="0.45"
+            />
+          </svg>
+        </>
+      ) : null}
       {live ? (
-        <span className="absolute left-2 top-2 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white/80">
-          Kamera
+        <span className="absolute left-2 top-2 z-[1] rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white/80">
+          {cam === "on" ? "Canlı" : "Kamera"}
         </span>
       ) : null}
-      <svg viewBox="0 0 120 90" className="relative h-[85%] w-auto text-white/55">
-        <circle cx="60" cy="32" r="16" fill="currentColor" opacity="0.7" />
-        <path
-          d="M24 90c4-28 20-42 36-42s32 14 36 42"
-          fill="currentColor"
-          opacity="0.55"
-        />
-      </svg>
       {doorOpen ? (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/35 p-3">
           <p className="rounded-2xl bg-[#39FF14] px-4 py-3 text-center font-display text-lg font-bold leading-tight text-accent shadow-lg sm:text-xl">
